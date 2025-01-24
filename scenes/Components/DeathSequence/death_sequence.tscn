@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmd4jroawtcxs"]
+
+[ext_resource type="Script" path="res://scenes/Components/DeathSequence/death_sequence.gd" id="1_je6v0"]
+
+[node name="DeathSequence" type="Node"]
+script = ExtResource("1_je6v0")

@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://tsuqdejxr2ko"]
+
+[ext_resource type="Texture2D" uid="uid://cdgsxkm37hi3j" path="res://Resources/Mine/Projectiles/Projectile_0_blast_spritesheet.png" id="3_x14s8"]
+[ext_resource type="PackedScene" uid="uid://bmd4jroawtcxs" path="res://scenes/Components/DeathSequence/death_sequence.tscn" id="5_rpjfd"]
+
+[sub_resource type="Animation" id="Animation_p1nu8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_lsig1"]
+resource_name = "proj_0_blast_anim"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lq1ba"]
+_data = {
+"RESET": SubResource("Animation_p1nu8"),
+"proj_0_blast_anim": SubResource("Animation_lsig1")
+}
+
+[node name="Explosion_Projectile_0" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_x14s8")
+hframes = 5
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lq1ba")
+}
+autoplay = "proj_0_blast_anim"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="DeathSequence" parent="." instance=ExtResource("5_rpjfd")]
+
+[connection signal="timeout" from="Timer" to="DeathSequence" method="die"]

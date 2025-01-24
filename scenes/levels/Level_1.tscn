@@ -1,0 +1,37 @@
+[gd_scene load_steps=11 format=3 uid="uid://dsq7ye0cjaogf"]
+
+[ext_resource type="PackedScene" uid="uid://cb6rntvxio8ua" path="res://scenes/player/player.tscn" id="1_7ht7q"]
+[ext_resource type="PackedScene" uid="uid://c7gu3pyv3hp5h" path="res://scenes/objects/Environment/background.tscn" id="1_wsuqg"]
+[ext_resource type="PackedScene" uid="uid://fm5budb6xsom" path="res://scenes/objects/Environment/arena.tscn" id="4_yxl65"]
+[ext_resource type="PackedScene" uid="uid://jaiprm3fc81f" path="res://scenes/GUI/Hearts/hearts_container.tscn" id="6_ec8vr"]
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyResource/enemy_resource.gd" id="6_vp0nh"]
+[ext_resource type="PackedScene" uid="uid://wycdu1f5fu2m" path="res://scenes/Enemies/EnemySpawner/enemy_spawner.tscn" id="7_bdqte"]
+[ext_resource type="Resource" uid="uid://ct04vcrpwk1n1" path="res://scenes/Enemies/EnemyResource/enemy_red_1.tres" id="7_f0ska"]
+[ext_resource type="Resource" uid="uid://cfgd52u6aom0g" path="res://scenes/Enemies/EnemyResource/enemy_red_2.tres" id="8_bg8eu"]
+[ext_resource type="PackedScene" uid="uid://ctko3f6o72jlt" path="res://scenes/Enemies/enemy_red.tscn" id="9_p87r3"]
+
+[sub_resource type="Resource" id="Resource_b61j8"]
+script = ExtResource("6_vp0nh")
+enemy_type = ExtResource("9_p87r3")
+time_to_spawn = 1.0
+position = Vector2(350, 100)
+speed = 200.0
+
+[node name="Level_1" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_wsuqg")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_7ht7q")]
+position = Vector2(203, 538)
+
+[node name="Arena" parent="." instance=ExtResource("4_yxl65")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HeartsContainer" parent="CanvasLayer" instance=ExtResource("6_ec8vr")]
+offset_right = 96.0
+
+[node name="EnemySpawner" parent="." instance=ExtResource("7_bdqte")]
+enemy_resources = Array[ExtResource("6_vp0nh")]([ExtResource("7_f0ska"), ExtResource("8_bg8eu"), SubResource("Resource_b61j8")])

@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=3 uid="uid://bf58paio3bw7y"]
+
+[ext_resource type="Script" path="res://scenes/Effects/explosion_enemy.gd" id="1_ov0o8"]
+[ext_resource type="PackedScene" uid="uid://cw7t17ry6lxp1" path="res://scenes/Components/Sound/sound.tscn" id="1_yaqw0"]
+[ext_resource type="AudioStream" uid="uid://cu2npovyd4ktc" path="res://Resources/Sounds/8bit_explosions/sfx_exp_short_hard15.wav" id="2_nka5j"]
+[ext_resource type="Texture2D" uid="uid://eylp31uvigu6" path="res://Resources/Lunar Lander/Effects/Explosion.png" id="4_etvp4"]
+[ext_resource type="PackedScene" uid="uid://bmd4jroawtcxs" path="res://scenes/Components/DeathSequence/death_sequence.tscn" id="5_rpjfd"]
+
+[sub_resource type="Animation" id="Animation_mkjmf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_ktfkp"]
+resource_name = "explosion"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_etvp4"), null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4h14v"]
+_data = {
+"RESET": SubResource("Animation_mkjmf"),
+"explosion": SubResource("Animation_ktfkp")
+}
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_ov0o8")
+
+[node name="Sound" parent="." instance=ExtResource("1_yaqw0")]
+audio_stream = ExtResource("2_nka5j")
+autoplay = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4h14v")
+}
+autoplay = "explosion"
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="DeathSequence" parent="." instance=ExtResource("5_rpjfd")]
+
+[connection signal="ready" from="." to="Sound" method="play_sound"]
+[connection signal="timeout" from="Timer" to="DeathSequence" method="die"]

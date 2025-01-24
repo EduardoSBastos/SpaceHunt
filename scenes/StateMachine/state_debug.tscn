@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://tpykq7gh4p6o"]
+
+[ext_resource type="Script" path="res://scenes/StateMachine/state_debug.gd" id="1_a657o"]
+
+[node name="StateDebug" type="Node" node_paths=PackedStringArray("label")]
+script = ExtResource("1_a657o")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 140.0
+offset_bottom = 39.0
+text = "Shablau"
+horizontal_alignment = 1
+vertical_alignment = 1
