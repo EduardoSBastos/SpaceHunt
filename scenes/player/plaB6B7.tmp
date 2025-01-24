@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://cb6rntvxio8ua"]
+
+[ext_resource type="Texture2D" uid="uid://cm20flltxqni8" path="res://Resources/Lunar Lander/Ships/green_1.png" id="1_cptl1"]
+[ext_resource type="Script" path="res://scenes/StateMachine/PlayerStateMachine/player_state_machine.gd" id="1_fifm1"]
+[ext_resource type="Script" path="res://scenes/player/player_movement.gd" id="1_gtlcl"]
+[ext_resource type="Script" path="res://scenes/player/weapon.gd" id="3_8ebf2"]
+[ext_resource type="PackedScene" uid="uid://du22euww25is" path="res://scenes/Components/Health/health.tscn" id="4_jft10"]
+[ext_resource type="PackedScene" uid="uid://dyhpxyjrsm8e6" path="res://scenes/Components/Hitbox/hitbox.tscn" id="5_6blvr"]
+[ext_resource type="PackedScene" uid="uid://bf58paio3bw7y" path="res://scenes/Effects/explosion_enemy.tscn" id="7_2tnw7"]
+[ext_resource type="PackedScene" uid="uid://t4wxhctukwv7" path="res://scenes/Components/DeathSequence/death_sequence_player.tscn" id="8_raj68"]
+[ext_resource type="PackedScene" uid="uid://tpykq7gh4p6o" path="res://scenes/StateMachine/state_debug.tscn" id="9_vw6ca"]
+[ext_resource type="Script" path="res://scenes/player/dead_player_logic.gd" id="10_v3acc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3in1"]
+radius = 11.0454
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 5
+
+[node name="PlayerMovement" type="Node" parent="." node_paths=PackedStringArray("player_FSM")]
+script = ExtResource("1_gtlcl")
+speed = 100
+player_FSM = NodePath("../PlayerFSM")
+
+[node name="PlayerFSM" type="Node" parent="."]
+script = ExtResource("1_fifm1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = -1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("1_cptl1")
+
+[node name="Weapon" type="Node2D" parent="."]
+script = ExtResource("3_8ebf2")
+cooldown = 0.15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_a3in1")
+
+[node name="Health" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("4_jft10")]
+hitbox = NodePath("../Hitbox")
+
+[node name="Hitbox" parent="." instance=ExtResource("5_6blvr")]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_a3in1")
+
+[node name="DeathSequencePlayer" parent="." instance=ExtResource("8_raj68")]
+spawn_on_death = Array[PackedScene]([ExtResource("7_2tnw7")])
+
+[node name="StateDebug" parent="." node_paths=PackedStringArray("playerFSM") instance=ExtResource("9_vw6ca")]
+playerFSM = NodePath("../PlayerFSM")
+
+[node name="DeadPlayerLogic" type="Node" parent="."]
+script = ExtResource("10_v3acc")
+
+[connection signal="on_hit_empty" from="Hitbox" to="PlayerFSM" method="player_gets_hit"]
+[connection signal="on_hit_empty" from="Hitbox" to="DeathSequencePlayer" method="die"]

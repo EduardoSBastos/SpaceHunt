@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://csn434t06g1m5"]
+
+[ext_resource type="Texture2D" uid="uid://51mahjs3d6iw" path="res://Resources/Hearts/heart.png" id="1_rmica"]
+[ext_resource type="Script" path="res://scenes/GUI/Hearts/heart_panel.gd" id="1_ynod1"]
+[ext_resource type="Texture2D" uid="uid://ollk7de0dxfi" path="res://Resources/Hearts/background.png" id="3_dnpyy"]
+
+[node name="HeartGui" type="Panel" node_paths=PackedStringArray("full_heart_sprite", "empty_heart_sprite")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(16, 13)
+offset_right = 16.0
+offset_bottom = 13.0
+script = ExtResource("1_ynod1")
+full_heart_sprite = NodePath("HeartSprite")
+empty_heart_sprite = NodePath("EmptyHeartSprite")
+
+[node name="HeartSprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_rmica")
+centered = false
+
+[node name="EmptyHeartSprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("3_dnpyy")
+centered = false

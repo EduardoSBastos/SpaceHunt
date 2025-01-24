@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw7t17ry6lxp1"]
+
+[ext_resource type="Script" path="res://scenes/Components/Sound/sound.gd" id="1_1pfuy"]
+[ext_resource type="AudioStream" uid="uid://c1727moh0xs52" path="res://Resources/Sounds/8bit_explosions/sfx_exp_short_soft11.wav" id="2_sbo0m"]
+
+[node name="Sound" type="Node"]
+script = ExtResource("1_1pfuy")
+audio_stream = ExtResource("2_sbo0m")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_sbo0m")

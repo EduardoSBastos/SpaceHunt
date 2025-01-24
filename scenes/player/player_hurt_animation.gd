@@ -1,0 +1,17 @@
+extends AnimationPlayer
+
+@export var animation_name:String = ""
+@export var player_FSM:PlayerFSM
+
+
+func _ready() -> void:
+	player_FSM.on_state_transition.connect(play_animation_on_hurt_state)
+
+
+func play_animation_on_hurt_state(state:int):
+	if state == player_FSM.states.hurt:
+		print("playing animation")
+		self.play(animation_name)
+	else:
+		print("hurt stopped")
+		self.stop()

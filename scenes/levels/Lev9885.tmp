@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsq7ye0cjaogf"]
+
+[ext_resource type="PackedScene" uid="uid://cb6rntvxio8ua" path="res://scenes/player/player.tscn" id="1_7ht7q"]
+[ext_resource type="PackedScene" uid="uid://c7gu3pyv3hp5h" path="res://scenes/objects/Environment/background.tscn" id="1_wsuqg"]
+[ext_resource type="PackedScene" uid="uid://fm5budb6xsom" path="res://scenes/objects/Environment/arena.tscn" id="4_yxl65"]
+
+[node name="Level_1" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_wsuqg")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_7ht7q")]
+position = Vector2(203, 538)
+script = null
+
+[node name="Arena" parent="." instance=ExtResource("4_yxl65")]

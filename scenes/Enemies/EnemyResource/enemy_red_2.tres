@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyResouorce" load_steps=3 format=3 uid="uid://cfgd52u6aom0g"]
+
+[ext_resource type="PackedScene" uid="uid://ctko3f6o72jlt" path="res://scenes/Enemies/enemy_red.tscn" id="1_2ifx1"]
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyResource/enemy_resource.gd" id="2_sqaku"]
+
+[resource]
+script = ExtResource("2_sqaku")
+enemy_type = ExtResource("1_2ifx1")
+time_to_spawn = 0.75
+position = Vector2(200, 250)
+speed = 25.0

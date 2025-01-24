@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7gu3pyv3hp5h"]
+
+[ext_resource type="Texture2D" uid="uid://cy6h8wfb3rrjq" path="res://Resources/Sprites/BG Space/Space Background 1.png" id="1_ojtuy"]
+[ext_resource type="Script" path="res://scenes/objects/Environment/background.gd" id="1_t707u"]
+
+[node name="Background" type="Node2D"]
+script = ExtResource("1_t707u")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = -600.0
+offset_right = 400.0
+offset_bottom = 600.0
+texture = ExtResource("1_ojtuy")
+expand_mode = 4
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true

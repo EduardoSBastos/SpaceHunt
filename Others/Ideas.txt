@@ -1,0 +1,52 @@
+
+> Player Health as Hearts
+  - Impact feedback
+  - Temporary invincible state
+
+> Player State Machine
+  - In godot, each state can be a Node that gets called by a parten FSM Node
+  - Player states:
+	- PlayerControlled OK
+	- Dead 
+	  - What heppends when player dies?
+		- Movement stops OK
+		- Sprite invisible OK
+		- Teleport to spawn position
+		- Revive
+		  - Sprite visible
+		  - Regain controls
+	- I just wrote a bunch of code to do the same as deleting the player!
+
+> Player State Machine
+  - Each state of the machine sends signals on execution, enter and exit state.
+	- Nodes respond to these signals.
+	  - Some nodes toggle their "active" state based on which state was 
+		transitioned into.
+
+ - It bothers me that the sender of the signal knows who to send the signal to.
+   - Connecting trough code solves the issue
+	 - Even tough it means more code.
+
+> Enemy spawner
+  - A Node that sits on the level
+  - Spawns enemies based on a series of commands
+  - Comands include: time_to_spawn, position, type of enemy, initial_speed
+
+> Player revive after death
+  - Player Finite State Machine?
+  - Timed invincibility
+	- player sprite flashing
+  - Reenter arena  
+	- overwrite controls
+  - Lives system
+	- where does it sit?
+  - Game Over screen
+
+> Stage End
+
+> Main Menu
+  - Screen/Scene Transitions
+
+> Enemy squential death
+  - pre death explosions
+  - damage
