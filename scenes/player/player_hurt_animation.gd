@@ -10,8 +10,6 @@ func _ready() -> void:
 
 func play_animation_on_hurt_state(state:int):
 	if state == player_FSM.states.hurt:
-		print("playing animation")
 		self.play(animation_name)
 	else:
-		print("hurt stopped")
 		self.stop()

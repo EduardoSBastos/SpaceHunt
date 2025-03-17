@@ -12,11 +12,9 @@ func _ready() -> void:
 	timer.timeout.connect(self_destruct)
 
 func start_timer():
-	print(self.name + ": start timer")
 	timer.stop()
 	timer.wait_time = wait_time
 	timer.start()
 
 func self_destruct():
-	print(self.name + ": self destruct")
 	self.get_parent().queue_free()

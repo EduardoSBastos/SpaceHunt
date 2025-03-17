@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs1ay8ie33fpo"]
+
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyWeapon/enemy_weapon.gd" id="1_1rwpb"]
+
+[node name="Enemy Weapon" type="Node" node_paths=PackedStringArray("triggerTimer")]
+script = ExtResource("1_1rwpb")
+triggerTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0

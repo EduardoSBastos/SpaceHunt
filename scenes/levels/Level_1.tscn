@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsq7ye0cjaogf"]
+[gd_scene load_steps=12 format=3 uid="uid://dsq7ye0cjaogf"]
 
 [ext_resource type="PackedScene" uid="uid://cb6rntvxio8ua" path="res://scenes/player/player.tscn" id="1_7ht7q"]
 [ext_resource type="PackedScene" uid="uid://c7gu3pyv3hp5h" path="res://scenes/objects/Environment/background.tscn" id="1_wsuqg"]
@@ -17,6 +17,13 @@ time_to_spawn = 1.0
 position = Vector2(350, 100)
 speed = 200.0
 
+[sub_resource type="Resource" id="Resource_w82n1"]
+script = ExtResource("6_vp0nh")
+enemy_type = ExtResource("9_p87r3")
+time_to_spawn = 0.5
+position = Vector2(210, 120)
+speed = 150.0
+
 [node name="Level_1" type="Node2D"]
 
 [node name="Background" parent="." instance=ExtResource("1_wsuqg")]
@@ -34,4 +41,4 @@ position = Vector2(203, 538)
 offset_right = 96.0
 
 [node name="EnemySpawner" parent="." instance=ExtResource("7_bdqte")]
-enemy_resources = Array[ExtResource("6_vp0nh")]([ExtResource("7_f0ska"), ExtResource("8_bg8eu"), SubResource("Resource_b61j8")])
+enemy_resources = Array[ExtResource("6_vp0nh")]([ExtResource("7_f0ska"), ExtResource("8_bg8eu"), SubResource("Resource_b61j8"), SubResource("Resource_w82n1")])

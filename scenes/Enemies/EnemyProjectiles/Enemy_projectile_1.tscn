@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://db8rwm7bcib2i"]
+
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyProjectiles/enemy_projectile_1.gd" id="1_on3lq"]
+[ext_resource type="Texture2D" uid="uid://dllp780bqug0d" path="res://Resources/Mine/Projectiles/Projectile_1.png" id="2_amc0h"]
+[ext_resource type="PackedScene" uid="uid://camdy6s8dmjki" path="res://scenes/Components/Impact/impact.tscn" id="3_50hvg"]
+[ext_resource type="PackedScene" uid="uid://bmd4jroawtcxs" path="res://scenes/Components/DeathSequence/death_sequence.tscn" id="4_tg714"]
+[ext_resource type="PackedScene" uid="uid://tsuqdejxr2ko" path="res://scenes/Effects/explosion_projectile_0.tscn" id="5_bfkv7"]
+[ext_resource type="PackedScene" uid="uid://cw7t17ry6lxp1" path="res://scenes/Components/Sound/sound.tscn" id="6_ymjwp"]
+[ext_resource type="AudioStream" uid="uid://ul78w1dv7fuj" path="res://Resources/Sounds/8bit_Weapons/sfx_wpn_laser8.wav" id="7_f7k1g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hxpvw"]
+radius = 5.38516
+
+[node name="projectile_0" type="Node2D"]
+script = ExtResource("1_on3lq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_amc0h")
+
+[node name="Area2D" type="Area2D" parent="." groups=["Projectiles"]]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hxpvw")
+
+[node name="Impact" parent="." node_paths=PackedStringArray("area2D") instance=ExtResource("3_50hvg")]
+area2D = NodePath("../Area2D")
+damage_amount = 1
+
+[node name="DeathSequence_Effects" parent="." instance=ExtResource("4_tg714")]
+spawn_on_death = Array[PackedScene]([ExtResource("5_bfkv7")])
+
+[node name="DeathSequence_Simple" parent="." instance=ExtResource("4_tg714")]
+
+[node name="Sound_onSpawn" parent="." instance=ExtResource("6_ymjwp")]
+audio_stream = ExtResource("7_f7k1g")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.07288e-06, 1)
+scale = Vector2(1.1, 1)
+
+[connection signal="ready" from="." to="Sound_onSpawn" method="play_sound"]
+[connection signal="on_inpact" from="Impact" to="DeathSequence_Effects" method="die"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="DeathSequence_Simple" method="die"]

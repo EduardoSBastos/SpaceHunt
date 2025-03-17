@@ -84,7 +84,7 @@ player_FSM = NodePath("../PlayerFSM")
 shape = SubResource("CircleShape2D_a3in1")
 
 [node name="Health" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("4_jft10")]
-max_health = 1
+max_health = 3
 is_player = true
 hitbox = NodePath("../Hitbox")
 
