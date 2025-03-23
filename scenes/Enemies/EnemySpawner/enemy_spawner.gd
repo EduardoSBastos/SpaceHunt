@@ -1,20 +1,27 @@
 extends Node
+class_name EnemySpawner
 
-@export var enemy_resources:Array[EnemyResouorce]
+@export var time_to_initiate:float = 0
+@export var enemy_spawn_resources:Array[EnemySpawnResouorce]
+var enemy_red:PackedScene = preload("res://scenes/Enemies/EnemyScenes/enemy_red.tscn")
 
-var enemy_red:PackedScene = preload("res://scenes/Enemies/enemy_red.tscn")
 
 func _ready() -> void:
-	for current_enemy_resource in enemy_resources:
-		setup_spawn(current_enemy_resource)
+	get_tree().create_timer(time_to_initiate).timeout.connect(start)
+
+func start():
+	for current_enemy_spawn_resource in enemy_spawn_resources:
+		if current_enemy_spawn_resource == null:
+			continue
+		setup_spawn(current_enemy_spawn_resource)
 
 
-func setup_spawn(enemy_resource:EnemyResouorce) -> void:
-	var time_to_spawn = enemy_resource.time_to_spawn
-	get_tree().create_timer(time_to_spawn).timeout.connect(spawn_enemy.bind(enemy_resource))
+func setup_spawn(enemy_spawn_resource:EnemySpawnResouorce) -> void:
+	var time_to_spawn = enemy_spawn_resource.time_to_spawn
+	get_tree().create_timer(time_to_spawn).timeout.connect(spawn_enemy.bind(enemy_spawn_resource))
 
 
-func spawn_enemy(enemy_resource:EnemyResouorce) -> void:
-	var enemy_instance:Node2D = enemy_resource.enemy_type.instantiate()
-	enemy_instance.position = enemy_resource.position
+func spawn_enemy(enemy_spawn_resource:EnemySpawnResouorce) -> void:
+	var enemy_instance:Enemy = enemy_spawn_resource.enemy_type.instantiate()
 	get_tree().get_current_scene().add_child.call_deferred(enemy_instance)
+	enemy_instance.call_deferred("initiate", enemy_spawn_resource.position, enemy_spawn_resource.speed, enemy_spawn_resource.direction)

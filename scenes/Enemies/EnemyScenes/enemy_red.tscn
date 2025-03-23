@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://ctko3f6o72jlt"]
+[gd_scene load_steps=17 format=3 uid="uid://ctko3f6o72jlt"]
 
 [ext_resource type="Texture2D" uid="uid://deoidnswptuf4" path="res://Resources/Mine/Ships/red_2.png" id="1_1kyxr"]
-[ext_resource type="Script" path="res://scenes/Enemies/enemy_red.gd" id="1_fekvu"]
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyScenes/enemy.gd" id="1_fekvu"]
 [ext_resource type="PackedScene" uid="uid://du22euww25is" path="res://scenes/Components/Health/health.tscn" id="2_8d25d"]
 [ext_resource type="PackedScene" uid="uid://dyhpxyjrsm8e6" path="res://scenes/Components/Hitbox/hitbox.tscn" id="3_54n3g"]
 [ext_resource type="PackedScene" uid="uid://bmd4jroawtcxs" path="res://scenes/Components/DeathSequence/death_sequence.tscn" id="4_adkbs"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://scenes/Enemies/animation_player.gd" id="9_hjg1i"]
 [ext_resource type="PackedScene" uid="uid://c2y8nhhiuxuhy" path="res://scenes/Components/Movement/enemy_movement.tscn" id="10_rfm44"]
 [ext_resource type="Script" path="res://scenes/Enemies/destroy_on_leave_screen.gd" id="12_ugn0w"]
-[ext_resource type="PackedScene" uid="uid://bs1ay8ie33fpo" path="res://scenes/Enemies/EnemyWeapon/enemy_weapon.tscn" id="13_00oag"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yytck"]
 radius = 17.0294
@@ -63,7 +62,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_1kyxr")
 
 [node name="Health" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("2_8d25d")]
-max_health = 70
+max_health = 30
 hitbox = NodePath("../Hitbox")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_54n3g")]
@@ -93,7 +92,6 @@ script = ExtResource("9_hjg1i")
 animation_name = "flash"
 
 [node name="EnemyMovement" parent="." node_paths=PackedStringArray("root_node") instance=ExtResource("10_rfm44")]
-speed = Vector2(0, 75)
 root_node = NodePath("..")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
@@ -104,8 +102,6 @@ visible_on_screen_notifier = NodePath("../VisibleOnScreenNotifier2D")
 timer = NodePath("SelfDestructTimer")
 
 [node name="SelfDestructTimer" type="Timer" parent="DestroyOnLeaveScreen"]
-
-[node name="Enemy Weapon" parent="." instance=ExtResource("13_00oag")]
 
 [connection signal="on_zero_health" from="Health" to="DeathSequence" method="die"]
 [connection signal="on_hit_empty" from="Hitbox" to="Sound_onHit" method="play_sound"]
