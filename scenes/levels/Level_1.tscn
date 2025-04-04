@@ -1,40 +1,61 @@
-[gd_scene load_steps=15 format=3 uid="uid://dsq7ye0cjaogf"]
+[gd_scene load_steps=22 format=3 uid="uid://dsq7ye0cjaogf"]
 
 [ext_resource type="PackedScene" uid="uid://cb6rntvxio8ua" path="res://scenes/player/player.tscn" id="1_7ht7q"]
 [ext_resource type="PackedScene" uid="uid://c7gu3pyv3hp5h" path="res://scenes/objects/Environment/background.tscn" id="1_wsuqg"]
 [ext_resource type="PackedScene" uid="uid://fm5budb6xsom" path="res://scenes/objects/Environment/arena.tscn" id="4_yxl65"]
 [ext_resource type="PackedScene" uid="uid://duhpnlklg75ov" path="res://scenes/Enemies/EnemySpawner/spawn_maestro.tscn" id="5_4u7iw"]
 [ext_resource type="PackedScene" uid="uid://jaiprm3fc81f" path="res://scenes/GUI/Hearts/hearts_container.tscn" id="6_ec8vr"]
-[ext_resource type="Script" path="res://scenes/Enemies/EnemyResource/enemy_spawn_resource.gd" id="6_vp0nh"]
+[ext_resource type="Script" path="res://Godot_Resources/EnemyResource/enemy_spawn_resource.gd" id="6_vp0nh"]
 [ext_resource type="PackedScene" uid="uid://wycdu1f5fu2m" path="res://scenes/Enemies/EnemySpawner/enemy_spawner.tscn" id="7_bdqte"]
-[ext_resource type="Resource" uid="uid://ct04vcrpwk1n1" path="res://scenes/Enemies/EnemyResource/enemy_spawn_red_1.tres" id="7_f0ska"]
-[ext_resource type="Resource" uid="uid://cfgd52u6aom0g" path="res://scenes/Enemies/EnemyResource/enemy_spawn_red_2.tres" id="8_bg8eu"]
+[ext_resource type="Resource" uid="uid://ct04vcrpwk1n1" path="res://Godot_Resources/EnemyResource/enemy_spawn_red_1.tres" id="7_f0ska"]
+[ext_resource type="Resource" uid="uid://cfgd52u6aom0g" path="res://Godot_Resources/EnemyResource/enemy_spawn_red_2.tres" id="8_bg8eu"]
 [ext_resource type="PackedScene" uid="uid://ctko3f6o72jlt" path="res://scenes/Enemies/EnemyScenes/enemy_red.tscn" id="9_p87r3"]
-[ext_resource type="PackedScene" uid="uid://cmy2igwptxo6t" path="res://scenes/Enemies/EnemyScenes/enemy_nave.tscn" id="10_qihap"]
+[ext_resource type="Script" path="res://Godot_Resources/EnemyMovementResource/resource_enemy_move_linear.gd" id="11_k3jch"]
+[ext_resource type="PackedScene" uid="uid://cmy2igwptxo6t" path="res://scenes/Enemies/EnemyScenes/enemy_nave.tscn" id="12_ryl8m"]
+[ext_resource type="Texture2D" uid="uid://vqiag6x8yrkv" path="res://Resources/Test/Asteroid Brown.png" id="13_ujnas"]
+[ext_resource type="Script" path="res://tests/path_follow_2d.gd" id="13_xbgt0"]
+
+[sub_resource type="Resource" id="Resource_f7vjf"]
+script = ExtResource("11_k3jch")
+speed = 150.0
+direction = Vector2(0, 1)
+intial_position = Vector2(200, 0)
 
 [sub_resource type="Resource" id="Resource_q0q3h"]
 script = ExtResource("6_vp0nh")
 enemy_type = ExtResource("9_p87r3")
-time_to_spawn = 0.25
-position = Vector2(50, -30)
-speed = 250.0
+time_to_spawn = 1.0
+movement = SubResource("Resource_f7vjf")
+
+[sub_resource type="Resource" id="Resource_tk4rw"]
+script = ExtResource("11_k3jch")
+speed = 150.0
 direction = Vector2(0, 1)
+intial_position = Vector2(250, 0)
 
 [sub_resource type="Resource" id="Resource_71ae3"]
 script = ExtResource("6_vp0nh")
 enemy_type = ExtResource("9_p87r3")
-time_to_spawn = 0.1
-position = Vector2(270, -30)
-speed = 250.0
-direction = Vector2(0, 1)
+time_to_spawn = 1.25
+movement = SubResource("Resource_tk4rw")
 
-[sub_resource type="Resource" id="Resource_r56jf"]
-script = ExtResource("6_vp0nh")
-enemy_type = ExtResource("10_qihap")
-time_to_spawn = 0.0
-position = Vector2(150, -30)
+[sub_resource type="Resource" id="Resource_wqsa4"]
+script = ExtResource("11_k3jch")
 speed = 100.0
 direction = Vector2(0, 1)
+intial_position = Vector2(100, 0)
+
+[sub_resource type="Resource" id="Resource_y13n4"]
+script = ExtResource("6_vp0nh")
+enemy_type = ExtResource("12_ryl8m")
+time_to_spawn = 0.5
+movement = SubResource("Resource_wqsa4")
+
+[sub_resource type="Curve2D" id="Curve2D_0j0xu"]
+_data = {
+"points": PackedVector2Array(-35.6762, -78.4877, 35.6762, 78.4877, 267, 131, -7.13525, -76.1093, 7.13525, 76.1093, 278, 263, 71.3525, 48.7575, -71.3525, -48.7575, 171, 400, 27.3518, 74.9201, -27.3518, -74.9201, 157, 216, -2.37842, 57.082, 2.37842, -57.082, 38, 174, -49.9467, 22.5949, 49.9467, -22.5949, 100, 36, -23.1806, -18.1855, 23.1806, 18.1855, 200, 31, -9.82154, -14.3114, 9.82154, 14.3114, 233, 62, 0, 0, 0, 0, 267, 131)
+}
+point_count = 9
 
 [node name="Level_1" type="Node2D"]
 
@@ -54,10 +75,23 @@ offset_right = 96.0
 
 [node name="SpawnMaestro" parent="." instance=ExtResource("5_4u7iw")]
 
-[node name="Spawn_red" parent="SpawnMaestro" instance=ExtResource("7_bdqte")]
+[node name="Spawn_wave_1" parent="SpawnMaestro" instance=ExtResource("7_bdqte")]
 time_to_initiate = 1.0
 enemy_spawn_resources = Array[ExtResource("6_vp0nh")]([ExtResource("7_f0ska"), ExtResource("8_bg8eu"), SubResource("Resource_q0q3h"), SubResource("Resource_71ae3")])
 
-[node name="Spawn_nave" parent="SpawnMaestro" instance=ExtResource("7_bdqte")]
-time_to_initiate = 5.0
-enemy_spawn_resources = Array[ExtResource("6_vp0nh")]([SubResource("Resource_r56jf")])
+[node name="Spawn_wave_2" parent="SpawnMaestro" instance=ExtResource("7_bdqte")]
+time_to_initiate = 3.0
+enemy_spawn_resources = Array[ExtResource("6_vp0nh")]([SubResource("Resource_y13n4")])
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0j0xu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(278.121, 222.497)
+rotation = 1.70472
+progress = 95.115
+script = ExtResource("13_xbgt0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("13_ujnas")

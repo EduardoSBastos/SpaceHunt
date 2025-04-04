@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://nkhixntxsi4m"]
+
+[ext_resource type="Script" path="res://scenes/Components/Movement/enemy_movement_park.gd" id="1_k1mog"]
+
+[node name="EnemyMovement" type="Node"]
+script = ExtResource("1_k1mog")

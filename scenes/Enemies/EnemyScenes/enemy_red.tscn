@@ -62,7 +62,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_1kyxr")
 
 [node name="Health" parent="." node_paths=PackedStringArray("hitbox") instance=ExtResource("2_8d25d")]
-max_health = 30
+max_health = 20
 hitbox = NodePath("../Hitbox")
 
 [node name="Hitbox" parent="." instance=ExtResource("3_54n3g")]

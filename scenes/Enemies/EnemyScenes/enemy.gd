@@ -10,7 +10,5 @@ func _ready():
 	if movement == null:
 		push_error("No EnemyMovement Node found!")
 		
-func initiate(start_position:Vector2, speed:float, direction:Vector2):
-	movement.teleport_to(start_position)
-	movement.set_speed(speed)
-	movement.set_direction(direction)
+func initiate(movement_resource:ResEnemeyMoveBase):
+	movement.initiate(movement_resource)

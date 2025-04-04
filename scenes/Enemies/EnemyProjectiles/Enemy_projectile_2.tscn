@@ -1,0 +1,69 @@
+[gd_scene load_steps=13 format=3 uid="uid://ri7mn4klrqvn"]
+
+[ext_resource type="Script" path="res://scenes/Enemies/EnemyProjectiles/enemy_projectile_1.gd" id="1_sxiq7"]
+[ext_resource type="Texture2D" uid="uid://xfdj2i6nj3nb" path="res://Resources/Mine/Projectiles/Projectile_2_enemy/Projectile_2_enemy1.png" id="2_3656h"]
+[ext_resource type="Texture2D" uid="uid://dpxjdalbgahck" path="res://Resources/Mine/Projectiles/Projectile_2_enemy/Projectile_2_enemy2.png" id="3_gk5ex"]
+[ext_resource type="PackedScene" uid="uid://camdy6s8dmjki" path="res://scenes/Components/Impact/impact.tscn" id="3_wu6np"]
+[ext_resource type="Texture2D" uid="uid://dnl1jpe32vrp3" path="res://Resources/Mine/Projectiles/Projectile_2_enemy/Projectile_2_enemy3.png" id="4_fi0yo"]
+[ext_resource type="PackedScene" uid="uid://bmd4jroawtcxs" path="res://scenes/Components/DeathSequence/death_sequence.tscn" id="4_ijv4u"]
+[ext_resource type="PackedScene" uid="uid://tsuqdejxr2ko" path="res://scenes/Effects/explosion_projectile_0.tscn" id="5_86cd2"]
+[ext_resource type="Texture2D" uid="uid://mu8kqyixxssg" path="res://Resources/Mine/Projectiles/Projectile_2_enemy/Projectile_2_enemy4.png" id="5_juj1o"]
+[ext_resource type="PackedScene" uid="uid://cw7t17ry6lxp1" path="res://scenes/Components/Sound/sound.tscn" id="6_v0ggn"]
+[ext_resource type="AudioStream" uid="uid://ul78w1dv7fuj" path="res://Resources/Sounds/8bit_Weapons/sfx_wpn_laser8.wav" id="7_jm0om"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d3iga"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3656h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gk5ex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fi0yo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_juj1o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hxpvw"]
+radius = 5.38516
+
+[node name="projectile_0" type="Node2D"]
+script = ExtResource("1_sxiq7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_d3iga")
+frame_progress = 0.5108
+
+[node name="Area2D" type="Area2D" parent="." groups=["Projectiles"]]
+scale = Vector2(2, 2)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hxpvw")
+
+[node name="Impact" parent="." node_paths=PackedStringArray("area2D") instance=ExtResource("3_wu6np")]
+area2D = NodePath("../Area2D")
+damage_amount = 1
+
+[node name="DeathSequence_Effects" parent="." instance=ExtResource("4_ijv4u")]
+spawn_on_death = Array[PackedScene]([ExtResource("5_86cd2")])
+
+[node name="DeathSequence_Simple" parent="." instance=ExtResource("4_ijv4u")]
+
+[node name="Sound_onSpawn" parent="." instance=ExtResource("6_v0ggn")]
+audio_stream = ExtResource("7_jm0om")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.07288e-06, 1)
+scale = Vector2(1.1, 1)
+
+[connection signal="ready" from="." to="Sound_onSpawn" method="play_sound"]
+[connection signal="on_inpact" from="Impact" to="DeathSequence_Effects" method="die"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="DeathSequence_Simple" method="die"]

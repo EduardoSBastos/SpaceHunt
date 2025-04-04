@@ -24,4 +24,4 @@ func setup_spawn(enemy_spawn_resource:EnemySpawnResouorce) -> void:
 func spawn_enemy(enemy_spawn_resource:EnemySpawnResouorce) -> void:
 	var enemy_instance:Enemy = enemy_spawn_resource.enemy_type.instantiate()
 	get_tree().get_current_scene().add_child.call_deferred(enemy_instance)
-	enemy_instance.call_deferred("initiate", enemy_spawn_resource.position, enemy_spawn_resource.speed, enemy_spawn_resource.direction)
+	enemy_instance.call_deferred("initiate", enemy_spawn_resource.movement)
